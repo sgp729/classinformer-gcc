@@ -1,7 +1,7 @@
 .RECIPEPREFIX := >
 VPATH := .
 CXX := /usr/bin/clang++
-CXXFLAGS := -std=c++23 -Wall -Wextra -Wpedantic -O3 -fPIC
+CXXFLAGS := -std=c++23 -Wall -Wextra -Wpedantic -O3 -fPIC -D__EA64__
 INCLUDE := ./idasdk9/include
 
 BIN := bin
