@@ -20,14 +20,25 @@ vtables find_vtables_in_segment(const char* name) {
         ea_t start = segm->start_ea;
         ea_t end = segm->end_ea;
 
-        for (ea_t ptr = start; ptr < end; ptr += 8) {
+        size_t ptr_size = inf_is_64bit() ? 8 : 4;
+
+        for (ea_t ptr = start; ptr < end; ptr += ptr_size) {
                 // the first vtable element is 0x0 (offset to this)
-                if (get_qword(ptr) != 0) {
+                if (ptr_size == 4 and get_dword(ptr) != 0) {
+                        continue;
+                }
+                else if (ptr_size == 8 and get_qword(ptr) != 0){
                         continue;
                 }
 
                 // the second vtable element is typeinfo for class
-                ea_t typeinfo_ptr = get_qword(ptr + 8);
+                ea_t typeinfo_ptr{};
+                if (ptr_size == 4) {
+                        typeinfo_ptr = get_dword(ptr + ptr_size);
+                }
+                else {
+                        typeinfo_ptr = get_qword(ptr + ptr_size);
+                }
                 qstring mangled_typeinfo_name = get_name(typeinfo_ptr);
 
                 if (not is_typeinfo(mangled_typeinfo_name)) {
