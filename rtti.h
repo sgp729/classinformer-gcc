@@ -12,7 +12,8 @@ struct vtable {
 };
 using vtables = std::vector<vtable>;
 
-vtables find_vtables_in_segment(const char*);
+void export_segment(vtables&, const char*);
+
 bool is_typeinfo(const qstring&);
 qstring get_typeinfo_class_name(const qstring&);
 

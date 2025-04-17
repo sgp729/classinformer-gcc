@@ -10,6 +10,7 @@ namespace class_informer {
 bool plugin::run(size_t arg) {
 
         rtti::vtables vts;
+
         if (storage::has_persistent_data()) {
 
                 int ans = ask_yn(ASKBTN_YES, "There is an existing VTable DB; Open it?");
@@ -25,7 +26,8 @@ bool plugin::run(size_t arg) {
         }
         else {
 nodata:
-                vts = rtti::find_vtables_in_segment(".data.rel.ro");
+                rtti::export_segment(vts, ".data.rel.ro");
+                rtti::export_segment(vts, ".data.rel.ro.local");
                 storage::store_persistent_data(vts);
         }
 

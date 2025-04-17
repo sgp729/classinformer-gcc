@@ -8,14 +8,12 @@
 
 namespace rtti {
 
-vtables find_vtables_in_segment(const char* name) {
+void export_segment(vtables& vts, const char* name) {
 
         segment_t* segm = get_segm_by_name(name);
         if (segm == nullptr) {
-                return {};
+                return;
         }
-
-        vtables ts;
 
         ea_t start = segm->start_ea;
         ea_t end = segm->end_ea;
@@ -46,10 +44,8 @@ vtables find_vtables_in_segment(const char* name) {
                 }
 
                 qstring class_name = get_typeinfo_class_name(mangled_typeinfo_name);
-                ts.emplace_back(ptr, class_name);
+                vts.emplace_back(ptr, class_name);
         }
-
-        return ts;
 }
 
 bool is_typeinfo(const qstring& name) {
