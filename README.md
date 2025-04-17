@@ -7,7 +7,7 @@ Class Informer plugin is designed to search for virtual tables in executables co
 To build the plugin follow the steps:
 ```
 git clone https://github.com/sgp729/classinformer-gcc.git
-cd class-informer
+cd classinformer-gcc
 ```
 Then, obtain `SDK for IDA Pro` archive from the Hex-Rays [download center](https://my.hex-rays.com/dashboard/download-center/downloads) <br>
 Decompress the archive and put your arch SDK into `classinformer-gcc/idasdk9` <br>
